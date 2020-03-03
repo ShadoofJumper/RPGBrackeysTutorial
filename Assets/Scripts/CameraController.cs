@@ -38,7 +38,6 @@ public class CameraController : MonoBehaviour
 
         // чтобы крутить камеру вокруг заданого объекта
         // параметры: таргет вокруг которого крутим , ось по которой крутим, и угол прокрутки
-        Debug.Log($"angel: {currentYaw}");
         transform.RotateAround(target.position, Vector3.up, currentYaw);
     }
 
