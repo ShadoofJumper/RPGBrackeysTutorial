@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using UnityEngine.EventSystems;
 using UnityEngine;
 
 public class PlayController : MonoBehaviour
@@ -19,6 +18,12 @@ public class PlayController : MonoBehaviour
 
     void Update()
     {
+        // get info, is mouse over UI object
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
+
         // for left mouse button
         if (Input.GetMouseButtonDown(0))
         {

@@ -9,9 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 321cb1757cb9a134daf5de1b109da86a, type: 3}
-  m_Name: Item
+  m_Script: {fileID: 11500000, guid: 5eb090d1f8bec3d4d91ad5cf2a627bea, type: 3}
+  m_Name: Pants
   m_EditorClassIdentifier: 
-  name: Apple
+  name: Default Pants
   icon: {fileID: 0}
-  isDefault: 0
+  isDefault: 1
+  damageModifier: 0
+  armorModifier: 0
+  slotType: 2
+  equipMesh: {fileID: -529177695146175607, guid: 73be9633513854604baae3aa06041436,
+    type: 3}
+  meshRegions: 
