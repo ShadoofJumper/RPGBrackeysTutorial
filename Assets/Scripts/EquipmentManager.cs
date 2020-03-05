@@ -7,18 +7,18 @@ public class EquipmentManager : MonoBehaviour
     #region Singlton
     public static EquipmentManager instance;
 
-    // add event, in equipment changed
-    // delegate will have info about what changed in equipment
-    public delegate void OnEquipmentChanged(Equipment oldItem, Equipment newItem);
-    // create event
-    public OnEquipmentChanged onEquipmentChanged;
-
     private void Awake()
     {
         instance = this;
     }
 
     #endregion
+
+    // add event, in equipment changed
+    // delegate will have info about what changed in equipment
+    public delegate void OnEquipmentChanged(Equipment oldItem, Equipment newItem);
+    // create event
+    public OnEquipmentChanged onEquipmentChanged;
 
     // array of default equipment
     public Equipment[] defaultEquipment;
