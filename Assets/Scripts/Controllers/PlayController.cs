@@ -50,10 +50,12 @@ public class PlayController : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit))
             {
+
                 Interactable interactable = hit.collider.GetComponent<Interactable>();
                 // set focus interactele object
                 if (interactable != null)
                 {
+
                     SetFocus(interactable);
                 }
             }

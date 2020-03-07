@@ -15,8 +15,9 @@ MonoBehaviour:
   name: Helmet of fire
   icon: {fileID: 21300000, guid: 9e50337d1adcbd540b2f0786792b8166, type: 3}
   isDefault: 0
-  damageModifier: 0
+  damageModifier: 1
   armorModifier: 2
   slotType: 0
   equipMesh: {fileID: 545514987497518026, guid: 19c5a49c6a78c214291e5a6ef6e63503,
     type: 3}
+  meshRegions: 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerStats : CharacterStats
 {
-    //on start add ,ethods to eauipment event
+    //on start add methods to equipment event
     private void Start()
     {
         EquipmentManager.instance.onEquipmentChanged += OnEquipmentChanged;
@@ -27,6 +27,11 @@ public class PlayerStats : CharacterStats
             damage.RemoveModifier(oldItem.damageModifier);
         }
         
+    }
+
+    public override void Die()
+    {
+        PlayerManager.instance.KillPlayer();
     }
 
 
