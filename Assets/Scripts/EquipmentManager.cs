@@ -14,6 +14,10 @@ public class EquipmentManager : MonoBehaviour
 
     #endregion
 
+    // for set correct position of sword and shield
+    public Transform SwordTransform;
+    public Transform ShieldTransform;
+
     // add event, in equipment changed
     // delegate will have info about what changed in equipment
     public delegate void OnEquipmentChanged(Equipment oldItem, Equipment newItem);
@@ -29,6 +33,11 @@ public class EquipmentManager : MonoBehaviour
     // link to target that will have this meshes on it (Player)
     public SkinnedMeshRenderer target;
     private Inventory inventory;
+
+    // start equip blenser shape
+    private float[] startBlendShapeParam = new float[3];
+
+
     private void Start()
     {
         // get lenght of equipment
@@ -36,6 +45,13 @@ public class EquipmentManager : MonoBehaviour
         currentEquipment = new Equipment[numSlots];
         meshEquipment = new SkinnedMeshRenderer[numSlots];
         inventory = Inventory.instance;
+
+        // save start blend shape parametrs
+        for (int i = 0; i < startBlendShapeParam.Length; i++)
+        {
+            startBlendShapeParam[i] = target.GetBlendShapeWeight(i);
+        }
+        
 
         DressDefaultEquipment();
     }
@@ -51,13 +67,29 @@ public class EquipmentManager : MonoBehaviour
         if (onEquipmentChanged != null)
             onEquipmentChanged.Invoke(oldItem, item);
 
+        SetEquipmentBlendShape(item, 100, false);
+
         currentEquipment[itemIndex] = item;
         // create mesh on scene
         SkinnedMeshRenderer newMesh = Instantiate<SkinnedMeshRenderer>(item.equipMesh);
-        newMesh.bones = target.bones;
-        newMesh.rootBone = target.rootBone;
         meshEquipment[itemIndex] = newMesh;
-        SetEquipmentBlendShape(item, 100);
+
+
+        if (item != null && item.slotType == EquipmentSlot.Weapon)
+        {
+            newMesh.rootBone = SwordTransform;
+        }
+        else if (item != null && item.slotType == EquipmentSlot.Shield)
+        {
+            newMesh.rootBone = ShieldTransform;
+        }
+        else
+        {
+            //newMesh.transform.parent = targetMesh.transform;
+            newMesh.bones = target.bones;
+            newMesh.rootBone = target.rootBone;
+        }
+       
     }
 
     public Equipment Unequip(int slotId)
@@ -75,8 +107,8 @@ public class EquipmentManager : MonoBehaviour
 
             if (onEquipmentChanged != null)
                 onEquipmentChanged.Invoke(null, itemInEquip);
-
-            SetEquipmentBlendShape(itemInEquip, 0);
+            // set start blend shape paramentr
+            SetEquipmentBlendShape(itemInEquip, 0, true);
             return itemInEquip;
         }
         return null;
@@ -92,15 +124,20 @@ public class EquipmentManager : MonoBehaviour
         DressDefaultEquipment();
     }
 
-    private void SetEquipmentBlendShape(Equipment item, int weight)
+
+
+    private void SetEquipmentBlendShape(Equipment item, int weight, bool resetToStart)
     {
-        Debug.Log("SetEquipmentBlendShape: "+item.name);
         foreach (MeshRegion meshRegion in item.meshRegions)
         {
-            Debug.Log($"Set id: {(int)meshRegion} to {weight}");
-            target.SetBlendShapeWeight((int)meshRegion, weight);
-
-            Debug.Log("here: "+ target.GetBlendShapeWeight((int)meshRegion));
+            if (resetToStart)
+            {
+                target.SetBlendShapeWeight((int)meshRegion, startBlendShapeParam[(int)meshRegion]);
+            }
+            else
+            {
+                target.SetBlendShapeWeight((int)meshRegion, weight);
+            }
         }
     }
 
